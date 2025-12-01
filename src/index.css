@@ -1,3 +1,8 @@
+*{
+  background-color: #F6F6F6;
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -7,7 +12,179 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.searchContainer {
+  position: relative;
+  width: 47rem;
 }
+
+.searchInput {
+  width: 100%;
+  height: 5rem;
+  background-color: #DADADA;
+  border: none;
+  border-radius: 2rem;
+  font-size: 1.3rem;
+  padding-left: 2rem;
+  padding-right: 4rem;
+  outline: none;
+}
+
+.searchInput::placeholder {
+  color: #000000;
+  opacity: 0.5;
+}
+
+.searchIcon {
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.8;
+  cursor: pointer;
+
+  background-color: #ffffff;
+  padding: 0.7rem;
+  border-radius: 50%;
+}
+
+header {
+  margin-left: 17rem;
+  margin-top: 3.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+}
+
+.busket {
+  width: 4rem;
+  height: 4rem;
+  cursor: pointer;
+  padding-right: 3rem;
+}
+
+
+.categoryCoffee {
+  width: 9rem;
+  max-height: calc(5 * 6rem + 4 * 0.8rem + 2rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1rem;
+  background: transparent;
+  border-radius: 1.6rem;
+}
+
+.categoryCoffee ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #ffffff;
+  border-radius: 1.6rem;
+}
+
+.categoryCoffee li {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem; 
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease-in-out;
+  width: 100%;
+  height: 5rem;
+}
+
+.categoryCoffee li:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.categoryCoffee li.selectedCoffee {
+  background-color: #AC8F64;
+  color: white;
+}
+
+.categoryCoffee::-webkit-scrollbar {
+  display: none;
+}
+.categoryCoffee {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.coffeeContainer {
+  display: flex;
+  flex-wrap: row;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.cardCoffee {
+width: 100%;
+height: auto;
+box-sizing: border-box;
+background:  #FFFFFF;
+border-radius: 2rem;
+box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.08);
+align-items: center;
+padding: 1.5rem;
+margin: 0;
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+cursor: pointer;
+}
+
+.cardCoffee:hover {
+transform: translateY(-8px);
+box-shadow: 0 20px 40px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.1);
+}
+
+.cardCoffee img {
+width: 100%;
+height: 12rem;
+object-fit: cover;
+border-radius: 1.5rem;
+margin-bottom: 1rem;
+transition: transform 0.3s ease;
+}
+
+.cardCoffee:hover img {
+transform: scale(1.05);
+}
+
+.cardCoffee h3 {
+font-size: 1.5rem;
+color: #4b3f2f;
+margin-bottom: 0.5rem;
+text-align: center;
+}
+
+.cardCoffee p {
+font-size: 1rem;
+color: #6b5e4a;
+text-align: center;
+margin-bottom: 1rem;
+line-height: 1.4;
+}
+
+.cardCoffee span {
+font-weight: 700;
+font-size: 1.2rem;
+color: #AC8F64;
+padding: 0.5rem 1rem;
+border-radius: 1rem;
+background: #f7f2eb;
+}
+
+.cardCoffee-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  width: 100%;
+}
+
