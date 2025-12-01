@@ -2,467 +2,199 @@ import './App.css';
 import { useState } from 'react';
 
 
+
+
 const coffeeMenu = {
   Cappucino: [
     {
       name: "Classic Cappucino",
-      image: "https://example.com/images/cappucino1.jpg",
+      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
       description: "Espresso with steamed milk and a thick layer of foam.",
       price: 4.5,
-      size: "Medium",
-      extras: ["Cinnamon", "Chocolate"],
-      milk: "Whole"
+      size: "Small",
+      extras: "",
+      milk: "Whole",
+      count: 0
     },
     {
       name: "Vanilla Cappucino",
-      image: "https://example.com/images/cappucino2.jpg",
+      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
       description: "Cappucino with a touch of vanilla syrup.",
       price: 5,
-      size: "Medium",
-      extras: ["Vanilla Syrup"],
-      milk: "Whole"
-    },
-    {
-      name: "Caramel Cappucino",
-      image: "https://example.com/images/cappucino3.jpg",
-      description: "Sweet caramel flavor with creamy foam.",
-      price: 5.5,
-      size: "Large",
-      extras: ["Caramel Sauce"],
-      milk: "Skimmed"
-    },
-    {
-      name: "Iced Cappucino",
-      image: "https://example.com/images/cappucino4.jpg",
-      description: "Chilled cappucino with ice cubes and milk foam.",
-      price: 5,
-      size: "Medium",
-      extras: ["Ice", "Caramel Drizzle"],
-      milk: "Almond"
-    },
-    {
-      name: "Mocha Cappucino",
-      image: "https://example.com/images/cappucino5.jpg",
-      description: "Blend of cappucino and chocolate.",
-      price: 6,
-      size: "Large",
-      extras: ["Chocolate Syrup", "Whipped Cream"],
-      milk: "Whole"
-    },
-    {
-      name: "Hazelnut Cappucino",
-      image: "https://example.com/images/cappucino6.jpg",
-      description: "Nutty hazelnut flavor with creamy foam.",
-      price: 5.5,
-      size: "Medium",
-      extras: ["Hazelnut Syrup"],
-      milk: "Oat"
+      size:  "Small",
+      extras: "",
+      milk: "Whole",
+      count: 0
     }
   ],
 
   Latte: [
     {
       name: "Classic Latte",
-      image: "https://example.com/images/latte1.jpg",
+      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
       description: "Smooth espresso with steamed milk.",
       price: 4.5,
-      size: "Medium",
-      extras: ["Caramel", "Vanilla"],
-      milk: "Whole"
+      size:  "Small",
+      extras: "",
+      milk: "Whole",
+      count: 0
     },
     {
       name: "Vanilla Latte",
-      image: "https://example.com/images/latte2.jpg",
+      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
       description: "Latte with a touch of vanilla syrup.",
       price: 5,
-      size: "Medium",
-      extras: ["Vanilla Syrup"],
-      milk: "Almond"
-    },
-    {
-      name: "Caramel Latte",
-      image: "https://example.com/images/latte3.jpg",
-      description: "Sweet caramel flavor with smooth milk.",
-      price: 5.5,
-      size: "Large",
-      extras: ["Caramel Sauce"],
-      milk: "Skimmed"
-    },
-    {
-      name: "Mocha Latte",
-      image: "https://example.com/images/latte4.jpg",
-      description: "Latte mixed with rich chocolate.",
-      price: 6,
-      size: "Large",
-      extras: ["Chocolate Syrup"],
-      milk: "Whole"
-    },
-    {
-      name: "Iced Latte",
-      image: "https://example.com/images/latte5.jpg",
-      description: "Chilled espresso with milk and ice.",
-      price: 5,
-      size: "Medium",
-      extras: ["Ice"],
-      milk: "Oat"
-    },
-    {
-      name: "Hazelnut Latte",
-      image: "https://example.com/images/latte6.jpg",
-      description: "Nutty flavor latte with creamy milk.",
-      price: 5.5,
-      size: "Medium",
-      extras: ["Hazelnut Syrup"],
-      milk: "Soy"
+      size:  "Small",
+      extras: "",
+      milk: "Almond",
+      count: 0
     }
   ],
 
   Americano: [
     {
       name: "Classic Americano",
-      image: "https://example.com/images/americano1.jpg",
+      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
       description: "Espresso diluted with hot water.",
       price: 3.5,
-      size: "Medium",
-      extras: [],
-      milk: "None"
+      size: "Small",
+      extras: "",
+      milk: "None",
+      count: 0
     },
     {
       name: "Iced Americano",
-      image: "https://example.com/images/americano2.jpg",
+      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
       description: "Chilled espresso with water and ice.",
       price: 4,
-      size: "Medium",
-      extras: ["Ice"],
-      milk: "None"
-    },
-    {
-      name: "Vanilla Americano",
-      image: "https://example.com/images/americano3.jpg",
-      description: "Americano with a touch of vanilla syrup.",
-      price: 4.5,
-      size: "Medium",
-      extras: ["Vanilla Syrup"],
-      milk: "None"
-    },
-    {
-      name: "Caramel Americano",
-      image: "https://example.com/images/americano4.jpg",
-      description: "Sweet caramel flavor in hot Americano.",
-      price: 5,
-      size: "Medium",
-      extras: ["Caramel Syrup"],
-      milk: "None"
-    },
-    {
-      name: "Hazelnut Americano",
-      image: "https://example.com/images/americano5.jpg",
-      description: "Nutty hazelnut aroma added to espresso.",
-      price: 5,
-      size: "Medium",
-      extras: ["Hazelnut Syrup"],
-      milk: "None"
-    },
-    {
-      name: "Iced Mocha Americano",
-      image: "https://example.com/images/americano6.jpg",
-      description: "Americano with chocolate and ice.",
-      price: 5.5,
-      size: "Large",
-      extras: ["Chocolate Syrup", "Ice"],
-      milk: "None"
+      size: "Small",
+      extras: "",
+      milk: "None",
+      count: 0
     }
   ],
 
   Espresso: [
     {
       name: "Single Espresso",
-      image: "https://example.com/images/espresso1.jpg",
+      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
       description: "Pure shot of espresso.",
       price: 2.5,
       size: "Small",
-      extras: [],
-      milk: "None"
+      extras: "",
+      milk: "None",
+      count: 0
     },
     {
       name: "Double Espresso",
-      image: "https://example.com/images/espresso2.jpg",
+      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
       description: "Two shots of rich espresso.",
       price: 3.5,
       size: "Small",
-      extras: [],
-      milk: "None"
-    },
-    {
-      name: "Macchiato Espresso",
-      image: "https://example.com/images/espresso3.jpg",
-      description: "Espresso with a dash of foamed milk.",
-      price: 3,
-      size: "Small",
-      extras: [],
-      milk: "Whole"
-    },
-    {
-      name: "Iced Espresso",
-      image: "https://example.com/images/espresso4.jpg",
-      description: "Chilled espresso over ice cubes.",
-      price: 3.5,
-      size: "Medium",
-      extras: ["Ice"],
-      milk: "None"
-    },
-    {
-      name: "Vanilla Espresso",
-      image: "https://example.com/images/espresso5.jpg",
-      description: "Espresso with vanilla syrup.",
-      price: 4,
-      size: "Medium",
-      extras: ["Vanilla Syrup"],
-      milk: "Skimmed"
-    },
-    {
-      name: "Caramel Espresso",
-      image: "https://example.com/images/espresso6.jpg",
-      description: "Espresso with caramel flavor.",
-      price: 4.5,
-      size: "Medium",
-      extras: ["Caramel Syrup"],
-      milk: "Whole"
+      extras: "",
+      milk: "None",
+      count: 0
     }
   ],
 
   Mocha: [
     {
       name: "Classic Mocha",
-      image: "https://example.com/images/mocha1.jpg",
+      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
       description: "Chocolate and espresso with steamed milk.",
       price: 5,
-      size: "Medium",
-      extras: ["Whipped Cream"],
-      milk: "Whole"
+      size:  "Small",
+      extras: "",
+      milk: "Whole",
+      count: 0
     },
     {
       name: "Iced Mocha",
-      image: "https://example.com/images/mocha2.jpg",
+      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
       description: "Chilled mocha with ice cubes.",
       price: 5.5,
-      size: "Medium",
-      extras: ["Ice", "Chocolate Drizzle"],
-      milk: "Almond"
-    },
-    {
-      name: "Caramel Mocha",
-      image: "https://example.com/images/mocha3.jpg",
-      description: "Mocha with caramel syrup.",
-      price: 6,
-      size: "Large",
-      extras: ["Caramel Syrup"],
-      milk: "Whole"
-    },
-    {
-      name: "Hazelnut Mocha",
-      image: "https://example.com/images/mocha4.jpg",
-      description: "Mocha with nutty hazelnut flavor.",
-      price: 6,
-      size: "Large",
-      extras: ["Hazelnut Syrup"],
-      milk: "Oat"
-    },
-    {
-      name: "Vanilla Mocha",
-      image: "https://example.com/images/mocha5.jpg",
-      description: "Mocha with vanilla syrup.",
-      price: 5.5,
-      size: "Medium",
-      extras: ["Vanilla Syrup"],
-      milk: "Skimmed"
-    },
-    {
-      name: "White Mocha",
-      image: "https://example.com/images/mocha6.jpg",
-      description: "White chocolate with espresso and milk.",
-      price: 6,
-      size: "Large",
-      extras: ["White Chocolate Sauce"],
-      milk: "Whole"
+      size:  "Small",
+      extras: "",
+      milk: "Almond",
+      count: 0
     }
   ],
 
   "Flat White": [
     {
       name: "Classic Flat White",
-      image: "https://example.com/images/flatwhite1.jpg",
+      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
       description: "Smooth espresso with velvety milk.",
       price: 4.5,
-      size: "Medium",
-      extras: [],
-      milk: "Whole"
+      size:  "Small",
+      extras: "",
+      milk: "Whole",
+      count: 0
     },
     {
       name: "Vanilla Flat White",
-      image: "https://example.com/images/flatwhite2.jpg",
+      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
       description: "Flat White with vanilla flavor.",
       price: 5,
-      size: "Medium",
-      extras: ["Vanilla Syrup"],
-      milk: "Almond"
-    },
-    {
-      name: "Caramel Flat White",
-      image: "https://example.com/images/flatwhite3.jpg",
-      description: "Flat White with caramel taste.",
-      price: 5.5,
-      size: "Medium",
-      extras: ["Caramel Syrup"],
-      milk: "Whole"
-    },
-    {
-      name: "Iced Flat White",
-      image: "https://example.com/images/flatwhite4.jpg",
-      description: "Chilled Flat White over ice cubes.",
-      price: 5,
-      size: "Medium",
-      extras: ["Ice"],
-      milk: "Skimmed"
-    },
-    {
-      name: "Hazelnut Flat White",
-      image: "https://example.com/images/flatwhite5.jpg",
-      description: "Flat White with hazelnut flavor.",
-      price: 5.5,
-      size: "Medium",
-      extras: ["Hazelnut Syrup"],
-      milk: "Oat"
-    },
-    {
-      name: "Mocha Flat White",
-      image: "https://example.com/images/flatwhite6.jpg",
-      description: "Flat White with chocolate and milk.",
-      price: 6,
-      size: "Large",
-      extras: ["Chocolate Syrup"],
-      milk: "Whole"
+      size:  "Small",
+      extras: "",
+      milk: "Almond",
+      count: 0
     }
   ],
 
   Macchiato: [
     {
       name: "Classic Macchiato",
-      image: "https://example.com/images/macchiato1.jpg",
+      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
       description: "Espresso topped with a small amount of milk foam.",
       price: 3.5,
       size: "Small",
-      extras: [],
-      milk: "Whole"
+      extras: "",
+      milk: "Whole",
+      count: 0
     },
     {
       name: "Caramel Macchiato",
-      image: "https://example.com/images/macchiato2.jpg",
+      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
       description: "Macchiato with caramel syrup.",
       price: 4.5,
-      size: "Medium",
-      extras: ["Caramel Syrup"],
-      milk: "Skimmed"
-    },
-    {
-      name: "Vanilla Macchiato",
-      image: "https://example.com/images/macchiato3.jpg",
-      description: "Macchiato with vanilla flavor.",
-      price: 4.5,
-      size: "Medium",
-      extras: ["Vanilla Syrup"],
-      milk: "Whole"
-    },
-    {
-      name: "Iced Macchiato",
-      image: "https://example.com/images/macchiato4.jpg",
-      description: "Chilled espresso with milk foam and ice.",
-      price: 5,
-      size: "Medium",
-      extras: ["Ice"],
-      milk: "Oat"
-    },
-    {
-      name: "Mocha Macchiato",
-      image: "https://example.com/images/macchiato5.jpg",
-      description: "Macchiato with chocolate and milk.",
-      price: 5.5,
-      size: "Medium",
-      extras: ["Chocolate Syrup"],
-      milk: "Whole"
-    },
-    {
-      name: "Hazelnut Macchiato",
-      image: "https://example.com/images/macchiato6.jpg",
-      description: "Macchiato with hazelnut flavor.",
-      price: 5.5,
-      size: "Medium",
-      extras: ["Hazelnut Syrup"],
-      milk: "Oat"
+      size:  "Small",
+      extras: "",
+      milk: "Skimmed",
+      count: 0
     }
   ],
 
   "Irish Coffee": [
     {
       name: "Classic Irish Coffee",
-      image: "https://example.com/images/irish1.jpg",
+      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
       description: "Hot coffee with Irish whiskey and sugar.",
       price: 6,
-      size: "Medium",
-      extras: ["Whiskey", "Cream"],
-      milk: "None"
+      size:  "Small",
+      extras: "",
+      milk: "None",
+      count: 0
     },
     {
       name: "Baileys Irish Coffee",
-      image: "https://example.com/images/irish2.jpg",
+      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
       description: "Irish coffee with Baileys cream liqueur.",
       price: 6.5,
-      size: "Medium",
-      extras: ["Baileys", "Whipped Cream"],
-      milk: "None"
-    },
-    {
-      name: "Iced Irish Coffee",
-      image: "https://example.com/images/irish3.jpg",
-      description: "Chilled Irish coffee with ice.",
-      price: 6,
-      size: "Medium",
-      extras: ["Ice", "Whiskey"],
-      milk: "None"
-    },
-    {
-      name: "Caramel Irish Coffee",
-      image: "https://example.com/images/irish4.jpg",
-      description: "Irish coffee with caramel syrup.",
-      price: 6.5,
-      size: "Medium",
-      extras: ["Caramel Syrup", "Whiskey"],
-      milk: "None"
-    },
-    {
-      name: "Vanilla Irish Coffee",
-      image: "https://example.com/images/irish5.jpg",
-      description: "Irish coffee with vanilla flavor.",
-      price: 6,
-      size: "Medium",
-      extras: ["Vanilla Syrup", "Whiskey"],
-      milk: "None"
-    },
-    {
-      name: "Hazelnut Irish Coffee",
-      image: "https://example.com/images/irish6.jpg",
-      description: "Irish coffee with hazelnut syrup.",
-      price: 6.5,
-      size: "Medium",
-      extras: ["Hazelnut Syrup", "Whiskey"],
-      milk: "None"
+      size:  "Small",
+      extras: "",
+      milk: "None",
+      count: 0
     }
   ]
 };
 
 
+
 function App() {
   const [filterCoffees, setfilterCoffees] = useState("All"); 
+  const [selectedCoffee, setSelectedCoffee] = useState([]);
 
   const CoffeeCategories = ({name, setfilterCoffees, filterCoffees}) =>{
 
@@ -473,21 +205,69 @@ function App() {
   }
 
   const CoffeeCard = ({ coffee }) => {
-    return (
-      <div className="cardCoffee">
+  return (
+    <div className="cardCoffee">
+      <div className="imgWrapper">
+        {coffee.count > 0 && (
+          <span className="coffeeCounter">{coffee.count}</span>
+        )}
         <img src={coffee.image} alt={coffee.name} />
-        <h3>{coffee.name}</h3>
-        <p>{coffee.description}</p>
-        <div>
-        <span>{coffee.price}₽</span>
-        <button classname="addCoffee">+</button>
-        </div>
       </div>
+
+      <h3>{coffee.name}</h3>
+      <p>{coffee.description}</p>
+
+      <div className="footerCoffeeCard">
+        <button
+          className={coffee.count > 0 ? "delCoffee" : "invisible"}
+          onClick={() => DelCoffeeBasket(coffee)}>-</button>
+
+        <span>{coffee.price}₽</span>
+
+        <button
+          className="addCoffee"
+          onClick={() => AddCoffeeBasket(coffee)}>+</button>
+      </div>
+    </div>
+  );
+};
+  const AddCoffeeBasket = (coffee) => {
+  const exists = selectedCoffee.find(c => c.name === coffee.name);
+
+  if (!exists) {
+    setSelectedCoffee([...selectedCoffee, { ...coffee, count: 1 }]);
+  } else {
+    setSelectedCoffee(
+      selectedCoffee.map(c =>
+        c.name === coffee.name
+          ? { ...c, count: c.count + 1 }
+          : c
+      )
     );
-  };
+  }
+};
+
+  const DelCoffeeBasket = (coffee) => {
+  const exists = selectedCoffee.find(c => c.name === coffee.name);
+  if (!exists) return;
+
+  if (exists.count === 1) {
+    setSelectedCoffee(
+      selectedCoffee.filter(c => c.name !== coffee.name)
+    );
+  } else {
+    setSelectedCoffee(
+      selectedCoffee.map(c =>
+        c.name === coffee.name
+          ? { ...c, count: c.count - 1 }
+          : c
+      )
+    );
+  }
+};
 
   return (
-    <div>
+    <div className="App">
       <div className="scrollButtom"></div>
       <header>
       <div className="searchContainer">
