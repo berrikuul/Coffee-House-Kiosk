@@ -2,7 +2,7 @@ import './App.css';
 import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import OrderPage from "./basket.js";
-
+import Coffee from "./Coffee.js"
 
 
 const coffeeMenu = {
@@ -191,48 +191,8 @@ const coffeeMenu = {
   ]
 };
 
-
-
-function App() {
-  const [filterCoffees, setfilterCoffees] = useState("All"); 
-  const [selectedCoffee, setSelectedCoffee] = useState([]);
-  const [showBasket, setShowBasket] = useState(false);
-
-  const CoffeeCategories = ({name}) => (
-    <li onClick={() => setfilterCoffees(name)} 
-        className={filterCoffees === name ? "selectedCoffee" : ""}>
-      {name}
-    </li>
-  );
-
-  const CoffeeCard = ({ coffee }) => (
-    <div className="cardCoffee">
-      <div className="imgWrapper">
-        {coffee.count > 0 && (
-          <span className="coffeeCounter">✔</span>
-        )}
-        <img src={coffee.image} alt={coffee.name} />
-      </div>
-
-      <h3>{coffee.name}</h3>
-      <p>{coffee.description}</p>
-
-      <div className="footerCoffeeCard">
-        <button
-          className={coffee.count > 0 ? "delCoffee" : "invisible"}
-          onClick={() => DelCoffeeBasket(coffee)}>-</button>
-
-        <span>{coffee.price}₽</span>
-
-        <button
-          className={coffee.count === 0 ? "addCoffee" : "invisible" }
-          onClick={() => AddCoffeeBasket(coffee)}>+</button>
-      </div>
-    </div>
-  );
-
-  const AddCoffeeBasket = (coffee) => {
-    setSelectedCoffee(c => {
+export const AddCoffeeBasket = ({coffee, setSelectedCoffees}) => {
+    setSelectedCoffees(c => {
       const exists = c.find(t => t.name === coffee.name);
       if (exists) {
         return c.map(t => t.name === coffee.name ? { ...t, count: t.count + 1 } : t);
@@ -242,8 +202,8 @@ function App() {
     });
   };
 
-  const DelCoffeeBasket = (coffee) => {
-    setSelectedCoffee(c => {
+export const DelCoffeeBasket = ({coffee, setSelectedCoffees}) => {
+    setSelectedCoffees(c => {
       const exists = c.find(t => t.name === coffee.name);
       if (!exists) return c;
       if (exists.count === 1) {
@@ -254,23 +214,78 @@ function App() {
     });
   };
 
+
+function App() {
+  const [filterCoffees, setfilterCoffees] = useState("All"); 
+  const [selectedCoffees, setSelectedCoffees] = useState([]);
+  const [selectedCoffee, setSelectedCoffee] = useState();
+  const [showBasket, setShowBasket] = useState(false);
+  const navigate = useNavigate();
+
+  const CoffeeCategories = ({name}) => (
+    <li onClick={() => setfilterCoffees(name)} 
+        className={filterCoffees === name ? "selectedCoffee" : ""}>
+      {name}
+    </li>
+  );
+
+  const CoffeeCard = ({ coffee }) => (
+    <div className="cardCoffee" onClick={() => {
+      setSelectedCoffee(coffee);
+      navigate("/coffee")}}>
+      <div className="imgWrapper">
+        {coffee.count > 0 && (
+          <span className="coffeeCounter">✔</span>
+        )}
+        <img src={coffee.image} alt={coffee.name} />
+      </div>
+
+      <h3>{coffee.name}</h3>
+      <p>{coffee.description}</p>
+
+      <div className="footerCoffeeCard" >
+        <button
+          className={coffee.count > 0 ? "delCoffee" : "invisible"}
+          onClick={(e) => {e.stopPropagation(); DelCoffeeBasket({coffee, setSelectedCoffees})}}>-</button>
+
+        <span>{coffee.price}$</span>
+
+        <button
+          className={coffee.count === 0 ? "addCoffee" : "invisible" }
+          onClick={(e) => {e.stopPropagation(); AddCoffeeBasket({coffee, setSelectedCoffees})} }>+</button>
+      </div>
+    </div>
+  );
+
+
   const HomePage = () => (
     <div className="App">
       <header>
         <div className="searchContainer">
           <input className="searchInput" placeholder="Browse your favourite coffee here.." />
         </div>
-        <div>
-          <span className='busket' onClick={() => setShowBasket(true)}>
-            
-<svg width="100px" height="100px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fillRule="evenodd" clipRule="evenodd" d="M9.5 19.5C10.0523 19.5 10.5 19.0523 10.5 18.5C10.5 17.9477 10.0523 17.5 9.5 17.5C8.94772 17.5 8.5 17.9477 8.5 18.5C8.5 19.0523 8.94772 19.5 9.5 19.5ZM9.5 20.5C10.6046 20.5 11.5 19.6046 11.5 18.5C11.5 17.3954 10.6046 16.5 9.5 16.5C8.39543 16.5 7.5 17.3954 7.5 18.5C7.5 19.6046 8.39543 20.5 9.5 20.5Z" fill="#000000"/>
-<path fillRule="evenodd" clipRule="evenodd" d="M16.5 19.5C17.0523 19.5 17.5 19.0523 17.5 18.5C17.5 17.9477 17.0523 17.5 16.5 17.5C15.9477 17.5 15.5 17.9477 15.5 18.5C15.5 19.0523 15.9477 19.5 16.5 19.5ZM16.5 20.5C17.6046 20.5 18.5 19.6046 18.5 18.5C18.5 17.3954 17.6046 16.5 16.5 16.5C15.3954 16.5 14.5 17.3954 14.5 18.5C14.5 19.6046 15.3954 20.5 16.5 20.5Z" fill="#000000"/>
-<path fillRule="evenodd" clipRule="evenodd" d="M3 4C3 3.72386 3.22386 3.5 3.5 3.5H5.5C5.71767 3.5 5.91033 3.64082 5.97641 3.84822L9.36993 14.5H17C17.2761 14.5 17.5 14.7239 17.5 15C17.5 15.2761 17.2761 15.5 17 15.5H9.00446C8.78679 15.5 8.59413 15.3592 8.52805 15.1518L5.13453 4.5H3.5C3.22386 4.5 3 4.27614 3 4Z" fill="#000000"/>
-<path d="M8.5 13L6 6H19.3371C19.6693 6 19.9092 6.31795 19.8179 6.63736L18.1036 12.6374C18.0423 12.852 17.8461 13 17.6228 13H8.5Z" fill="#000000"/>
-</svg> {selectedCoffee.length}
-          </span>
-        </div>
+        <div className="basketWrapper" onClick={() => setShowBasket(true)}>
+  <div className="basketIcon">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+      <path fillRule="evenodd" clipRule="evenodd"
+        d="M9.5 19.5C10.0523 19.5 10.5 19.0523 10.5 18.5C10.5 17.9477 10.0523 17.5 9.5 17.5C8.94772 17.5 8.5 17.9477 8.5 18.5C8.5 19.0523 8.94772 19.5 9.5 19.5Z"
+        fill="#000"/>
+      <path fillRule="evenodd" clipRule="evenodd"
+        d="M16.5 19.5C17.0523 19.5 17.5 19.0523 17.5 18.5C17.5 17.9477 17.0523 17.5 16.5 17.5C15.9477 17.5 15.5 17.9477 15.5 18.5C15.5 19.0523 15.9477 19.5 16.5 19.5Z"
+        fill="#000"/>
+      <path fillRule="evenodd" clipRule="evenodd"
+        d="M3 4C3 3.72386 3.22386 3.5 3.5 3.5H5.5C5.71767 3.5 5.91033 3.64082 5.97641 3.84822L9.36993 14.5H17C17.2761 14.5 17.5 14.7239 17.5 15C17.5 15.2761 17.2761 15.5 17 15.5H9.00446C8.78679 15.5 8.59413 15.3592 8.52805 15.1518L5.13453 4.5H3.5C3.22386 4.5 3 4.27614 3 4Z"
+        fill="#000"/>
+      <path
+        d="M8.5 13L6 6H19.3371C19.6693 6 19.9092 6.31795 19.8179 6.63736L18.1036 12.6374C18.0423 12.852 17.8461 13 17.6228 13H8.5Z"
+        fill="#000"/>
+    </svg>
+
+    {selectedCoffees.length > 0 && (
+      <span className="basketCounter">{selectedCoffees.length}</span>
+    )}
+  </div>
+</div>
       </header>
 
       <div className="coffeeContainer">
@@ -284,12 +299,12 @@ function App() {
           {(filterCoffees === "All"
             ? Object.keys(coffeeMenu).flatMap(category =>
                 coffeeMenu[category].map(coffeeItem => {
-                  const selected = selectedCoffee.find(c => c.name === coffeeItem.name);
+                  const selected = selectedCoffees.find(c => c.name === coffeeItem.name);
                   return <CoffeeCard key={coffeeItem.name} coffee={selected || { ...coffeeItem }} />;
                 })
               )
             : coffeeMenu[filterCoffees].map(coffeeItem => {
-                const selected = selectedCoffee.find(c => c.name === coffeeItem.name);
+                const selected = selectedCoffees.find(c => c.name === coffeeItem.name);
                 return <CoffeeCard key={coffeeItem.name} coffee={selected || { ...coffeeItem }} />;
               })
           )}
@@ -304,13 +319,15 @@ function App() {
         <Route path="/" element={<HomePage />} />
       </Routes>
 
+      <Routes>
+        <Route path="/coffee" element={<Coffee selectedCoffee={selectedCoffee} selectedCoffees={selectedCoffees} setSelectedCoffees={setSelectedCoffees}/>} />
+      </Routes>
+
       {showBasket && (
         <div className="modal-overlay" onClick={() => setShowBasket(false)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
             <OrderPage 
-              selectedCoffee={selectedCoffee} 
-              AddCoffeeBasket={AddCoffeeBasket} 
-              DelCoffeeBasket={DelCoffeeBasket} 
+              selectedCoffees={selectedCoffees}
             />
             <button className="close-btn" onClick={() => setShowBasket(false)}>Закрыть</button>
           </div>

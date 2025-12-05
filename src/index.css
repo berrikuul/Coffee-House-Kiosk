@@ -15,6 +15,7 @@ body {
 .searchContainer {
   position: relative;
   width: 47rem;
+  margin-top: 3rem;
 }
 
 .searchInput {
@@ -49,7 +50,6 @@ body {
 
 header {
   margin-left: 17rem;
-  margin-top: 3.6rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -180,7 +180,7 @@ background: #f7f2eb;
 
 .cardCoffee-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(22rem, 22.96rem));
   gap: 2rem;
   padding: 2rem;
   width: 100%;
@@ -271,3 +271,50 @@ background: #f7f2eb;
   padding: 5px 10px;
   cursor: pointer;
 }
+
+.basketWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  right: 4rem;
+  margin-top: 2.3rem;
+}
+
+.basketIcon {
+  position: relative;
+  width: 3.5rem;
+  height: 3.5rem;
+  background: #ffffff;
+  border-radius: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+
+.basketIcon svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.basketCounter {
+  position: absolute;
+  top: -0.4rem;
+  right: -0.4rem;
+
+  background: #AC8F64;
+  color: white;
+
+  font-size: 0.85rem;
+  font-weight: 700;
+
+  padding: 0.35rem 0.55rem;
+  border-radius: 1rem;
+
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+
