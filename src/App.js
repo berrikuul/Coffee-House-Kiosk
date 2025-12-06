@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import OrderPage from "./basket.js";
 import Coffee from "./Coffee.js"
@@ -192,81 +192,120 @@ const coffeeMenu = {
 };
 
 export const AddCoffeeBasket = ({coffee, setSelectedCoffees}) => {
-    setSelectedCoffees(c => {
-      const exists = c.find(t => t.name === coffee.name);
-      if (exists) {
-        return c.map(t => t.name === coffee.name ? { ...t, count: t.count + 1 } : t);
-      } else {
-        return [...c, { ...coffee, count: 1 }];
-      }
-    });
-  };
+  setSelectedCoffees(prev => {
+    const exists = prev.find(c => c.name === coffee.name);
+    if (exists) {
+      return prev.map(c => c.name === coffee.name ? {...c, count: c.count + 1} : c);
+    } else {
+      return [...prev, {...coffee, count: 1}];
+    }
+  });
+};
 
 export const DelCoffeeBasket = ({coffee, setSelectedCoffees}) => {
-    setSelectedCoffees(c => {
-      const exists = c.find(t => t.name === coffee.name);
-      if (!exists) return c;
-      if (exists.count === 1) {
-        return c.filter(t => t.name !== coffee.name);
-      } else {
-        return c.map(t => t.name === coffee.name ? { ...t, count: t.count - 1 } : t);
-      }
-    });
-  };
-
+  setSelectedCoffees(prev => {
+    const exists = prev.find(c => c.name === coffee.name);
+    if (!exists) return prev;
+    if (exists.count === 1) return prev.filter(c => c.name !== coffee.name);
+    return prev.map(c => c.name === coffee.name ? {...c, count: c.count - 1} : c);
+  });
+};
 
 function App() {
-  const [filterCoffees, setfilterCoffees] = useState("All"); 
-  const [selectedCoffees, setSelectedCoffees] = useState([]);
-  const [selectedCoffee, setSelectedCoffee] = useState();
+  const [filterCoffees, setFilterCoffees] = useState("All"); 
+  const [selectedCoffees, setSelectedCoffees] = useState(() => {
+  const saved = localStorage.getItem("selectedCoffees");
+  return saved ? JSON.parse(saved) : [];
+});
+
+const [placedOrders, setPlacedOrders] = useState(() => {
+  const saved = localStorage.getItem("placedOrders");
+  return saved ? JSON.parse(saved) : [];
+});
+  const [selectedCoffee, setSelectedCoffee] = useState(null);
   const [showBasket, setShowBasket] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+  localStorage.setItem("selectedCoffees", JSON.stringify(selectedCoffees));
+}, [selectedCoffees]);
+
+useEffect(() => {
+  localStorage.setItem("placedOrders", JSON.stringify(placedOrders));
+}, [placedOrders]);
+
+  const placeOrder = (coffee) => {
+  setPlacedOrders(prev => {
+    const exists = prev.find(c => c.name === coffee.name);
+
+    if (exists) {
+      return prev.map(c =>
+        c.name === coffee.name
+          ? { ...c, count: c.count + coffee.count }
+          : c
+      );
+    } else {
+      return [...prev, { ...coffee }];
+    }
+  });
+
+  setSelectedCoffees(prev =>
+    prev.filter(c => c.name !== coffee.name)
+  );
+};
+
+  const displayedCoffees = useMemo(() => {
+    return Object.entries(coffeeMenu)
+      .flatMap(([category, coffees]) =>
+        coffees.filter(coffee =>
+          (filterCoffees === "All" || filterCoffees === category) &&
+          coffee.name.toLowerCase().includes(searchInput.toLowerCase())
+        )
+      );
+  }, [filterCoffees, searchInput]);
+
   const CoffeeCategories = ({name}) => (
-    <li onClick={() => setfilterCoffees(name)} 
-        className={filterCoffees === name ? "selectedCoffee" : ""}>
+    <li onClick={() => setFilterCoffees(name)} className={filterCoffees === name ? "selectedCoffee" : ""}>
       {name}
     </li>
   );
 
   const CoffeeCard = ({ coffee }) => (
-    <div className="cardCoffee" onClick={() => {
-      setSelectedCoffee(coffee);
-      navigate("/coffee")}}>
+    <div className="cardCoffee" onClick={() => {setSelectedCoffee(coffee); navigate("/coffee")}}>
       <div className="imgWrapper">
-        {coffee.count > 0 && (
-          <span className="coffeeCounter">✔</span>
-        )}
+        {coffee.count > 0 && <span className="coffeeCounter">✔</span>}
         <img src={coffee.image} alt={coffee.name} />
       </div>
-
       <h3>{coffee.name}</h3>
       <p>{coffee.description}</p>
-
-      <div className="footerCoffeeCard" >
-        <button
-          className={coffee.count > 0 ? "delCoffee" : "invisible"}
-          onClick={(e) => {e.stopPropagation(); DelCoffeeBasket({coffee, setSelectedCoffees})}}>-</button>
-
+      <div className="footerCoffeeCard">
+        <button className={coffee.count > 0 ? "delCoffee" : "invisible"} onClick={e => {e.stopPropagation(); DelCoffeeBasket({coffee, setSelectedCoffees})}}>-</button>
         <span>{coffee.price}$</span>
-
-        <button
-          className={coffee.count === 0 ? "addCoffee" : "invisible" }
-          onClick={(e) => {e.stopPropagation(); AddCoffeeBasket({coffee, setSelectedCoffees})} }>+</button>
+        <button className={coffee.count === 0 ? "addCoffee" : "invisible"} onClick={e => {e.stopPropagation(); AddCoffeeBasket({coffee, setSelectedCoffees})}}>+</button>
       </div>
     </div>
   );
 
+  const HomePage = ({coffeesForBasket}) => {
+    const inputRef = useRef(null);
+    useEffect(() => { inputRef.current?.focus(); }, []);
 
-  const HomePage = () => (
-    <div className="App">
-      <header>
-        <div className="searchContainer">
-          <input className="searchInput" placeholder="Browse your favourite coffee here.." />
-        </div>
-        <div className="basketWrapper" onClick={() => setShowBasket(true)}>
-  <div className="basketIcon">
-    <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+    return (
+      <div className="App">
+        <header>
+          <div className="searchContainer">
+            <input
+              ref={inputRef}
+              className="searchInput"
+              placeholder="Browse your favourite coffee here.."
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
+          </div>
+          <div className="basketWrapper" onClick={() => setShowBasket(true)}>
+            <div className="basketIcon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
       <path fillRule="evenodd" clipRule="evenodd"
         d="M9.5 19.5C10.0523 19.5 10.5 19.0523 10.5 18.5C10.5 17.9477 10.0523 17.5 9.5 17.5C8.94772 17.5 8.5 17.9477 8.5 18.5C8.5 19.0523 8.94772 19.5 9.5 19.5Z"
         fill="#000"/>
@@ -280,55 +319,62 @@ function App() {
         d="M8.5 13L6 6H19.3371C19.6693 6 19.9092 6.31795 19.8179 6.63736L18.1036 12.6374C18.0423 12.852 17.8461 13 17.6228 13H8.5Z"
         fill="#000"/>
     </svg>
+              {coffeesForBasket.length > 0 && (
+  <span className="basketCounter">{coffeesForBasket.length}</span>
+)}
 
-    {selectedCoffees.length > 0 && (
-      <span className="basketCounter">{selectedCoffees.length}</span>
-    )}
-  </div>
-</div>
-      </header>
+            </div>
+          </div>
+        </header>
 
-      <div className="coffeeContainer">
-        <div className="categoryCoffee">
-          <ul>
-            {["All", "Cappucino","Latte","Americano","Espresso","Mocha","Flat White","Macchiato","Irish Coffee"]
-              .map(name => <CoffeeCategories key={name} name={name} />)}
-          </ul>
-        </div>
-        <div className="cardCoffee-container">
-          {(filterCoffees === "All"
-            ? Object.keys(coffeeMenu).flatMap(category =>
-                coffeeMenu[category].map(coffeeItem => {
-                  const selected = selectedCoffees.find(c => c.name === coffeeItem.name);
-                  return <CoffeeCard key={coffeeItem.name} coffee={selected || { ...coffeeItem }} />;
-                })
-              )
-            : coffeeMenu[filterCoffees].map(coffeeItem => {
-                const selected = selectedCoffees.find(c => c.name === coffeeItem.name);
-                return <CoffeeCard key={coffeeItem.name} coffee={selected || { ...coffeeItem }} />;
-              })
-          )}
+        <div className="coffeeContainer">
+          <div className="categoryCoffee">
+            <ul>
+              {["All", "Cappucino","Latte","Americano","Espresso","Mocha","Flat White","Macchiato","Irish Coffee"].map(name => <CoffeeCategories key={name} name={name} />)}
+            </ul>
+          </div>
+          <div className="cardCoffee-container">
+            {displayedCoffees.map(coffeeItem => {
+              const selected = selectedCoffees.find(c => c.name === coffeeItem.name);
+              return <CoffeeCard key={coffeeItem.name} coffee={selected || {...coffeeItem}} />
+            })}
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
+
+  const coffeesForBasket = [
+  ...placedOrders.map(po => {
+    const selected = selectedCoffees.find(sc => sc.name === po.name);
+    return selected
+      ? { ...po, count: po.count + selected.count }
+      : po;
+  }),
+
+  ...selectedCoffees.filter(
+    sc => !placedOrders.find(po => po.name === sc.name)
+  )
+];
 
   return (
     <>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-      </Routes>
-
-      <Routes>
-        <Route path="/coffee" element={<Coffee selectedCoffee={selectedCoffee} selectedCoffees={selectedCoffees} setSelectedCoffees={setSelectedCoffees}/>} />
+        <Route path="/" element={<HomePage coffeesForBasket={coffeesForBasket}/>} />
+        <Route path="/coffee" element={<Coffee
+          selectedCoffee={selectedCoffee} 
+          selectedCoffees={selectedCoffees} 
+          setSelectedCoffees={setSelectedCoffees} 
+          placeOrder={placeOrder} 
+          placedOrders={placedOrders}
+          coffeesForBasket={coffeesForBasket}
+        />} />
       </Routes>
 
       {showBasket && (
         <div className="modal-overlay" onClick={() => setShowBasket(false)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <OrderPage 
-              selectedCoffees={selectedCoffees}
-            />
+            <OrderPage selectedCoffees={coffeesForBasket} />
             <button className="close-btn" onClick={() => setShowBasket(false)}>Закрыть</button>
           </div>
         </div>
