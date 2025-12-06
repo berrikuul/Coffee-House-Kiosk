@@ -16,8 +16,8 @@ export default function CoffeePage({
 }) {
   const [showBasket, setShowBasket] = useState(false);
   const [size, setSize] = useState("TALL");
-  const [extra, setExtra] = useState(null);
-  const [milkType, setMilkType] = useState("OAT MILK");
+  const [extras, setExtra] = useState(null);
+  const [milk, setMilkType] = useState("OAT MILK");
   const navigate = useNavigate();
 
   if (!selectedCoffee) return null;
@@ -25,6 +25,38 @@ export default function CoffeePage({
   const coffeeInBasket = selectedCoffees.find(c => c.name === selectedCoffee.name);
 
 
+  const updateCoffeeOption = (updates) => {
+  setSelectedCoffees(prev =>
+    prev.map(c =>
+      c.name === selectedCoffee.name
+        ? { ...c, ...updates }
+        : c
+    )
+  );
+};
+
+  const calcPrice = (coffee) => {
+    let newPrice = coffee.price
+    const size = {
+      "SHORT": 1,
+      "TALL": 1.2,
+      "GRANDE": 1.3,
+      "VINCE": 1.5,
+    }
+    newPrice *= size[coffee.size] || 1
+
+    const milk = {
+      "OAT MILK": 0.3,
+      "SOY MILK":0.2,
+      "ALMOND MILK": 0.4,
+    }
+    newPrice += milk[coffee.milk] || 0
+
+    if (coffee.extras === "MILK") newPrice += 0.2
+    if (coffee.extras === "SUGAR") newPrice += 0.1
+
+    return Number(newPrice.toFixed(2));
+  }
 
   return (
     <div className="coffee-detail-container">
@@ -75,34 +107,36 @@ export default function CoffeePage({
             <div className="option-group">
               <span className="option-label">SIZE</span>
               <div className="buttons">
-                <button className={`btn ${size === "SHORT" ? "selected" : ""}`} onClick={() => setSize("SHORT")}>SHORT</button>
-                <button className={`btn ${size === "TALL" ? "selected" : ""}`} onClick={() => setSize("TALL")}>TALL</button>
-                <button className={`btn ${size === "GRANDE" ? "selected" : ""}`} onClick={() => setSize("GRANDE")}>GRANDE</button>
-                <button className={`btn ${size === "VENTI" ? "selected" : ""}`} onClick={() => setSize("VENTI")}>VENTI</button>
+                <button className={`btn ${size === "SHORT" ? "selected" : ""}`} disabled={!coffeeInBasket} onClick={() => {setSize("SHORT"); updateCoffeeOption({ size: "SHORT" })}}>SHORT</button>
+                <button className={`btn ${size === "TALL" ? "selected" : ""}`} disabled={!coffeeInBasket} onClick={() => {setSize("TALL"); updateCoffeeOption({ size: "TALL" })}}>TALL</button>
+                <button className={`btn ${size === "GRANDE" ? "selected" : ""}`} disabled={!coffeeInBasket} onClick={() => {setSize("GRANDE"); updateCoffeeOption({ size: "GRANDE" })}}>GRANDE</button>
+                <button className={`btn ${size === "VENTI" ? "selected" : ""}`} disabled={!coffeeInBasket} onClick={() => {setSize("VENTI"); updateCoffeeOption({ size: "VENTI" })}}>VENTI</button>
               </div>
             </div>
 
             <div className="option-group">
               <span className="option-label">EXTRA</span>
               <div className="buttons">
-                <button className={`btn ${extra === "SUGAR" ? "selected" : ""}`} onClick={() => {setExtra("SUGAR"); coffeeInBasket.extras = "SUGAR"}}>SUGAR</button>
-                <button className={`btn ${extra === "MILK" ? "selected" : ""}`} onClick={() => {setExtra("MILK"); coffeeInBasket.extras = "MILK"}}>MILK</button>
+                <button className={`btn ${extras === "SUGAR" ? "selected" : ""}`} disabled={!coffeeInBasket} onClick={() => {setExtra("SUGAR"); updateCoffeeOption({ extras: "SUGAR" })}}>SUGAR</button>
+                <button className={`btn ${extras === "MILK" ? "selected" : ""}`} disabled={!coffeeInBasket} onClick={() => {setExtra("MILK"); updateCoffeeOption({ extras: "MILK" })}}>MILK</button>
               </div>
             </div>
 
             <div className="option-group">
               <span className="option-label">MILK TYPE</span>
               <div className="buttons">
-                <button className={`btn ${milkType === "OAT MILK" ? "selected" : ""}`} onClick={() => setMilkType("OAT MILK")}>OAT MILK</button>
-                <button className={`btn ${milkType === "SOY MILK" ? "selected" : ""}`} onClick={() => setMilkType("SOY MILK")}>SOY MILK</button>
-                <button className={`btn ${milkType === "ALMOND MILK" ? "selected" : ""}`} onClick={() => setMilkType("ALMOND MILK")}>ALMOND MILK</button>
+                <button className={`btn ${milk === "OAT MILK" ? "selected" : ""}`} disabled={!coffeeInBasket} onClick={() => {setMilkType("OAT MILK"); updateCoffeeOption({ milk: "OAT MILK" })}}>OAT MILK</button>
+                <button className={`btn ${milk === "SOY MILK" ? "selected" : ""}`} disabled={!coffeeInBasket} onClick={() => {setMilkType("SOY MILK"); updateCoffeeOption({ milk: "SOY MILK" })}}>SOY MILK</button>
+                <button className={`btn ${milk === "ALMOND MILK" ? "selected" : ""}`} disabled={!coffeeInBasket} onClick={() => {setMilkType("ALMOND MILK"); updateCoffeeOption({ milk: "ALMOND MILK" })}}>ALMOND MILK</button>
               </div>
             </div>
           </div>
 
           <div className="order-section">
             <span className="price">
-              {coffeeInBasket ? selectedCoffee.price * coffeeInBasket.count : selectedCoffee.price}$
+              {coffeeInBasket
+                ? calcPrice(coffeeInBasket) * coffeeInBasket.count
+                : selectedCoffee.price}$ 
             </span>
 
             <div className="quantity">
@@ -114,7 +148,12 @@ export default function CoffeePage({
 
           <button
             className="place-order"
-            onClick={() => placeOrder(coffeeInBasket)}
+            onClick={() =>
+              placeOrder({
+                ...coffeeInBasket,
+                price: calcPrice(coffeeInBasket)
+              })
+            }
             disabled={!coffeeInBasket}
           >
             PLACE ORDER
