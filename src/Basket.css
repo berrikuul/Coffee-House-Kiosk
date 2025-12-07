@@ -1,6 +1,5 @@
-
 .basket-container {
-  width: 320px;
+  width: 90%;
   background: #fff;
   border-radius: 20px;
   padding: 20px;
@@ -17,11 +16,11 @@
 
 .basket-header h2 {
   font-weight: bold;
-  font-size: 18px;
+  font-size: 30px;
 }
 
 .hide-text {
-  font-size: 12px;
+  font-size: 20px;
   color: #999;
   cursor: pointer;
 }
@@ -40,8 +39,8 @@
 }
 
 .basket-order-img {
-  width: 40px;
-  height: 40px;
+  width: 55px;
+  height: 55px;
   object-fit: cover;
   border-radius: 50%;
   margin-right: 12px;
@@ -51,7 +50,7 @@
   flex: 1;
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
+  font-size: 20px;
 }
 
 .coffee-name {
@@ -63,12 +62,13 @@
   background: #f2dede;
   border-radius: 12px;
   padding: 2px 6px;
-  font-size: 12px;
+  font-size: 15px;
+  margin-right: 5px;
 }
 
 .coffee-total {
   font-weight: bold;
-  font-size: 14px;
+  font-size: 20px;
 }
 
 .basket-summary {
@@ -82,13 +82,13 @@
 .summary-line {
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
+  font-size: 20px;
   color: #555;
 }
 
 .summary-line.total {
   font-weight: bold;
-  font-size: 16px;
+  font-size: 30px;
 }
 
 .clear-all-btn {
@@ -101,10 +101,106 @@
   color: white;
   font-weight: bold;
   cursor: pointer;
-  font-size: 14px;
-  transition: background 0.3s;
+  font-size: 20px;
 }
 
 .clear-all-btn:hover {
   background: #a14f44;
+}
+
+@media (max-width: 900px) {
+  .basket-container {
+    width: 90%;
+    padding: 25px;
+  }
+
+  .basket-header h2 {
+    font-size: 40px;
+  }
+
+  .hide-text {
+    font-size: 20px;
+  }
+
+  .basket-order-img {
+    width: 55px;
+    height: 55px;
+    margin-right: 14px;
+  }
+
+  .basket-order-info {
+    font-size: 20px;
+  }
+
+  .coffee-count {
+    font-size: 17px;
+    padding: 3px 7px;
+    margin-right: 10px;
+  }
+
+  .coffee-total {
+    font-size: 25px;
+  }
+
+  .summary-line {
+    font-size: 27px;
+  }
+
+  .summary-line.total {
+    font-size: 35px;
+  }
+
+  .clear-all-btn {
+    font-size: 30px;
+    padding: 13px;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .basket-container {
+    width: 90%;
+    padding: 25px;
+  }
+
+  .basket-header h2 {
+    font-size: 35px;
+  }
+
+  .hide-text {
+    font-size: 14px;
+  }
+
+  .basket-order-img {
+    width: 55px;
+    height: 55px;
+    margin-right: 14px;
+  }
+
+  .basket-order-info {
+    font-size: 20px;
+  }
+
+  .coffee-count {
+    font-size: 17px;
+    padding: 3px 7px;
+    margin-right: 10px;
+  }
+
+  .coffee-total {
+    font-size: 25px;
+  }
+
+  .summary-line {
+    font-size: 27px;
+  }
+
+  .summary-line.total {
+    font-size: 35px;
+  }
+
+  .clear-all-btn {
+    font-size: 30px;
+    padding: 13px;
+  }
 }

@@ -2,7 +2,8 @@ import './App.css';
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import OrderPage from "./basket.js";
-import Coffee from "./Coffee.js"
+import Coffee from "./Coffee.js";
+import HomePage from "./HomePage.js";
 
 
 const coffeeMenu = {
@@ -211,8 +212,14 @@ export const DelCoffeeBasket = ({coffee, setSelectedCoffees}) => {
   });
 };
 
+
+
 function App() {
-  const [filterCoffees, setFilterCoffees] = useState("All"); 
+  const [filterCoffees, setFilterCoffees] = useState(() => {
+    const saved = localStorage.getItem("filterCoffees");
+    return saved ? JSON.parse(saved) : "All"
+  }); 
+  
   const [selectedCoffees, setSelectedCoffees] = useState(() => {
   const saved = localStorage.getItem("selectedCoffees");
   return saved ? JSON.parse(saved) : [];
@@ -222,10 +229,21 @@ const [placedOrders, setPlacedOrders] = useState(() => {
   const saved = localStorage.getItem("placedOrders");
   return saved ? JSON.parse(saved) : [];
 });
-  const [selectedCoffee, setSelectedCoffee] = useState(null);
-  const [showBasket, setShowBasket] = useState(false);
+
+  const [selectedCoffee, setSelectedCoffee] = useState(() => {
+    const saved = localStorage.getItem("selectedCoffee");
+    return saved ? JSON.parse(saved) : null;
+  });
+  const [showBasket, setShowBasket] = useState(() => {
+    const saved = localStorage.getItem("showBasket");
+    return saved ? JSON.parse(saved) : false;
+  });
   const [searchInput, setSearchInput] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    localStorage.setItem("filterCoffees", JSON.stringify(filterCoffees));
+  }, [filterCoffees]);
 
   useEffect(() => {
   localStorage.setItem("selectedCoffees", JSON.stringify(selectedCoffees));
@@ -234,6 +252,14 @@ const [placedOrders, setPlacedOrders] = useState(() => {
   useEffect(() => {
     localStorage.setItem("placedOrders", JSON.stringify(placedOrders));
   }, [placedOrders]);
+
+  useEffect(() => {
+    localStorage.setItem("selectedCoffee", JSON.stringify(selectedCoffee)); 
+  }, [selectedCoffee]);
+
+  useEffect(() => {
+    localStorage.setItem("showBasket", JSON.stringify(showBasket));
+  }, [showBasket]);
 
   const placeOrder = (coffee) => {
   setPlacedOrders(prev => {
@@ -287,62 +313,7 @@ const [placedOrders, setPlacedOrders] = useState(() => {
     </div>
   );
 
-  const HomePage = ({coffeesForBasket}) => {
-    const inputRef = useRef(null);
-    useEffect(() => { inputRef.current?.focus(); }, []);
-
-    return (
-      <div className="App">
-        <header>
-          <div className="searchContainer">
-            <input
-              ref={inputRef}
-              className="searchInput"
-              placeholder="Browse your favourite coffee here.."
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-            />
-          </div>
-          <div className="basketWrapper" onClick={() => setShowBasket(true)}>
-            <div className="basketIcon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd"
-        d="M9.5 19.5C10.0523 19.5 10.5 19.0523 10.5 18.5C10.5 17.9477 10.0523 17.5 9.5 17.5C8.94772 17.5 8.5 17.9477 8.5 18.5C8.5 19.0523 8.94772 19.5 9.5 19.5Z"
-        fill="#000"/>
-      <path fillRule="evenodd" clipRule="evenodd"
-        d="M16.5 19.5C17.0523 19.5 17.5 19.0523 17.5 18.5C17.5 17.9477 17.0523 17.5 16.5 17.5C15.9477 17.5 15.5 17.9477 15.5 18.5C15.5 19.0523 15.9477 19.5 16.5 19.5Z"
-        fill="#000"/>
-      <path fillRule="evenodd" clipRule="evenodd"
-        d="M3 4C3 3.72386 3.22386 3.5 3.5 3.5H5.5C5.71767 3.5 5.91033 3.64082 5.97641 3.84822L9.36993 14.5H17C17.2761 14.5 17.5 14.7239 17.5 15C17.5 15.2761 17.2761 15.5 17 15.5H9.00446C8.78679 15.5 8.59413 15.3592 8.52805 15.1518L5.13453 4.5H3.5C3.22386 4.5 3 4.27614 3 4Z"
-        fill="#000"/>
-      <path
-        d="M8.5 13L6 6H19.3371C19.6693 6 19.9092 6.31795 19.8179 6.63736L18.1036 12.6374C18.0423 12.852 17.8461 13 17.6228 13H8.5Z"
-        fill="#000"/>
-    </svg>
-              {coffeesForBasket.length > 0 && (
-  <span className="basketCounter">{coffeesForBasket.length}</span>
-)}
-
-            </div>
-          </div>
-        </header>
-
-        <div className="coffeeContainer">
-          <div className="categoryCoffee">
-            <ul>
-              {["All", "Cappucino","Latte","Americano","Espresso","Mocha","Flat White","Macchiato","Irish Coffee"].map(name => <CoffeeCategories key={name} name={name} />)}
-            </ul>
-          </div>
-          <div className="cardCoffee-container">
-            {displayedCoffees.map(coffeeItem => {
-              const selected = selectedCoffees.find(c => c.name === coffeeItem.name);
-              return <CoffeeCard key={coffeeItem.name} coffee={selected || {...coffeeItem}} />
-            })}
-          </div>
-        </div>
-      </div>
-    );
-  };
+  
 
   const coffeesForBasket = [
   ...placedOrders.map(po => {
@@ -360,7 +331,16 @@ const [placedOrders, setPlacedOrders] = useState(() => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<HomePage coffeesForBasket={coffeesForBasket}/>} />
+        <Route path="/" element={<HomePage 
+        coffeesForBasket={coffeesForBasket}
+        CoffeeCategories={CoffeeCategories}
+        CoffeeCard={CoffeeCard}
+        setSearchInput={setSearchInput}
+        setShowBasket={setShowBasket}
+        displayedCoffees={displayedCoffees}
+        searchInput={searchInput}
+        selectedCoffees={selectedCoffees}
+        />} />
         <Route path="/coffee" element={<Coffee
           selectedCoffee={selectedCoffee} 
           selectedCoffees={selectedCoffees} 
@@ -368,13 +348,14 @@ const [placedOrders, setPlacedOrders] = useState(() => {
           placeOrder={placeOrder} 
           placedOrders={placedOrders}
           coffeesForBasket={coffeesForBasket}
+          setPlacedOrders={setPlacedOrders}
         />} />
       </Routes>
 
       {showBasket && (
         <div className="modal-overlay" onClick={() => setShowBasket(false)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <OrderPage selectedCoffees={selectedCoffees} setSelectedCoffees={setSelectedCoffees} setPlacedOrders={setPlacedOrders} />
+            <OrderPage selectedCoffees={coffeesForBasket} setSelectedCoffees={setSelectedCoffees} setPlacedOrders={setPlacedOrders} />
             <button className="close-btn" onClick={() => setShowBasket(false)}>
               <span><svg width="37" height="23" viewBox="0 0 37 23" fill="none" xmlns="http://www.w3.org/2000/svg">
 <mask id="path-1-inside-1_19_671" fill="white">

@@ -2,7 +2,7 @@
 import React from "react";
 import "./Basket.css";
 
-export default function Basket({ selectedCoffees, setSelectedCoffees, placedOrders, setPlacedOrders }) {
+export default function Basket({ selectedCoffees, setSelectedCoffees, setPlacedOrders }) {
 
   const clearAll = () => {
     setSelectedCoffees([]);
@@ -27,7 +27,7 @@ export default function Basket({ selectedCoffees, setSelectedCoffees, placedOrde
               <span className="coffee-name">{coffee.name}</span>
               <span className="coffee-count">({coffee.count})</span>
             </div>
-            <span className="coffee-total">{(coffee.price * coffee.count).toFixed(2)} р.</span>
+            <span className="coffee-total">{(coffee.price * coffee.count).toFixed(2)}$</span>
           </div>
         ))}
       </div>
@@ -35,13 +35,13 @@ export default function Basket({ selectedCoffees, setSelectedCoffees, placedOrde
       <div className="basket-summary">
         <div className="summary-line">
           <span>Скидка 10%</span>
-          <span>-{discount.toFixed(2)} р.</span>
+          <span>-{discount.toFixed(2)}$</span>
         </div>
         <div className="summary-line total">
           <span>К оплате</span>
-          <span>{finalPrice.toFixed(2)} р.</span>
+          <span>{finalPrice.toFixed(2)}$</span>
         </div>
-        <button className="clear-all-btn" onClick={clearAll}>Удалить всё</button>
+        <button className="clear-all-btn" onClick={clearAll}>Оплатить</button>
       </div>
     </div>
   );
