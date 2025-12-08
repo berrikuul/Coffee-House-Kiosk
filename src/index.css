@@ -1,6 +1,7 @@
 .App{
   background-color: #F6F6F6;
   box-sizing: border-box;
+  margin-bottom: 0;
 }
 
 html, body {
@@ -129,6 +130,7 @@ header {
   flex-direction: row;
   gap: 2rem;
   padding: 2rem;
+  padding-bottom: 100%;
 }
 
 .cardCoffee {
@@ -346,6 +348,10 @@ background: #f7f2eb;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
     }
+
+    .coffeeContainer{
+      padding-bottom: 100%;
+    }
 }
 
 
@@ -380,6 +386,7 @@ background: #f7f2eb;
   .coffeeContainer {
     flex-direction: column;
     padding: 1.5rem;
+    padding-bottom: 100%;
   }
 
   .categoryCoffee {
@@ -431,6 +438,7 @@ background: #f7f2eb;
 
   .coffeeContainer {
     padding: 1rem;
+    padding-bottom: 100%;
   }
 
   .categoryCoffee ul {
