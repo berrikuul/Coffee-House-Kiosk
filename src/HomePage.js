@@ -72,7 +72,7 @@ function HomePage({coffeesForBasket, CoffeeCategories, CoffeeCard, setSearchInpu
         <div className="coffeeContainer">
           <div className="categoryCoffee" ref={categoryRef}>
             <ul>
-              {["All", "Cappucino","Latte","Americano","Espresso","Mocha","Flat White","Macchiato","Irish Coffee"].map(name => <CoffeeCategories key={name} name={name}  />)}
+              {["All", "Cappucino","Latte","Americano","Espresso","Matcha","Flat White","Macchiato","Irish Coffee"].map(name => <CoffeeCategories key={name} name={name}  />)}
             </ul>
           </div>
           <div className="cardCoffee-container">

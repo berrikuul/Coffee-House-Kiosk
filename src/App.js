@@ -10,7 +10,7 @@ const coffeeMenu = {
   Cappucino: [
     {
       name: "Classic Cappucino",
-      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
+      image: "https://as2.ftcdn.net/jpg/01/94/82/87/1000_F_194828703_vuNjz8Otb66VfI4rQyg9tBUPuGAugsUR.jpg",
       description: "Espresso with steamed milk and a thick layer of foam.",
       price: 4.5,
       size: "Small",
@@ -20,7 +20,7 @@ const coffeeMenu = {
     },
     {
       name: "Vanilla Cappucino",
-      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
+      image: "https://i.pinimg.com/originals/70/81/fb/7081fbdf8079d932936c9182d582afe6.jpg",
       description: "Cappucino with a touch of vanilla syrup.",
       price: 5,
       size:  "Small",
@@ -33,7 +33,7 @@ const coffeeMenu = {
   Latte: [
     {
       name: "Classic Latte",
-      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
+      image: "https://img.freepik.com/premium-photo/hot-coffee-latte-cappuccino-cup_554053-462.jpg",
       description: "Smooth espresso with steamed milk.",
       price: 4.5,
       size:  "Small",
@@ -56,7 +56,7 @@ const coffeeMenu = {
   Americano: [
     {
       name: "Classic Americano",
-      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
+      image: "https://avatars.mds.yandex.net/get-altay/1970665/2a00000174d5895a115f5ce64725716cada8/XXL_height",
       description: "Espresso diluted with hot water.",
       price: 3.5,
       size: "Small",
@@ -66,7 +66,7 @@ const coffeeMenu = {
     },
     {
       name: "Iced Americano",
-      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
+      image: "https://i.pinimg.com/originals/51/3c/aa/513caaee093ae4e2af2e41135082c9a6.jpg",
       description: "Chilled espresso with water and ice.",
       price: 4,
       size: "Small",
@@ -79,7 +79,7 @@ const coffeeMenu = {
   Espresso: [
     {
       name: "Single Espresso",
-      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
+      image: "https://chechnyatoday.com/images/uploads/2024/05/11/эспрессо.jpg",
       description: "Pure shot of espresso.",
       price: 2.5,
       size: "Small",
@@ -89,7 +89,7 @@ const coffeeMenu = {
     },
     {
       name: "Double Espresso",
-      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
+      image: "https://scdn.chibbis.ru/live/products/b062b3c943a03b4135049df0f0a1caeb.jpeg",
       description: "Two shots of rich espresso.",
       price: 3.5,
       size: "Small",
@@ -99,10 +99,10 @@ const coffeeMenu = {
     }
   ],
 
-  Mocha: [
+  Matcha: [
     {
-      name: "Classic Mocha",
-      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
+      name: "Classic Matcha",
+      image: "https://i.pinimg.com/originals/dc/52/8d/dc528d1afcd45512343fc3ed20193138.jpg",
       description: "Chocolate and espresso with steamed milk.",
       price: 5,
       size:  "Small",
@@ -111,8 +111,8 @@ const coffeeMenu = {
       count: 0
     },
     {
-      name: "Iced Mocha",
-      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
+      name: "Iced Matcha",
+      image: "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AA1JBEkO.img?w=2000&h=1333&m=4&q=84",
       description: "Chilled mocha with ice cubes.",
       price: 5.5,
       size:  "Small",
@@ -125,7 +125,7 @@ const coffeeMenu = {
   "Flat White": [
     {
       name: "Classic Flat White",
-      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
+      image: "https://avatars.mds.yandex.net/get-sprav-products/13852611/2a000001971bde0088a7d3aee9080c08426c/M_height",
       description: "Smooth espresso with velvety milk.",
       price: 4.5,
       size:  "Small",
@@ -135,7 +135,7 @@ const coffeeMenu = {
     },
     {
       name: "Vanilla Flat White",
-      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
+      image: "https://static.tildacdn.com/tild6332-3830-4962-a330-333835656337/IMG_2277.jpg",
       description: "Flat White with vanilla flavor.",
       price: 5,
       size:  "Small",
@@ -148,7 +148,7 @@ const coffeeMenu = {
   Macchiato: [
     {
       name: "Classic Macchiato",
-      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
+      image: "https://img.povar.ru/uploads/a7/d9/8d/45/makiato-773257.JPG",
       description: "Espresso topped with a small amount of milk foam.",
       price: 3.5,
       size: "Small",
@@ -158,7 +158,7 @@ const coffeeMenu = {
     },
     {
       name: "Caramel Macchiato",
-      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
+      image: "https://i.pinimg.com/736x/99/00/bc/9900bced0872d2b7a2296622f0e5469f.jpg",
       description: "Macchiato with caramel syrup.",
       price: 4.5,
       size:  "Small",
@@ -171,7 +171,7 @@ const coffeeMenu = {
   "Irish Coffee": [
     {
       name: "Classic Irish Coffee",
-      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
+      image: "https://i.pinimg.com/736x/7b/8e/fd/7b8efd54e3adc153c5baf61f301deaee.jpg",
       description: "Hot coffee with Irish whiskey and sugar.",
       price: 6,
       size:  "Small",
@@ -181,7 +181,7 @@ const coffeeMenu = {
     },
     {
       name: "Baileys Irish Coffee",
-      image: "https://avatars.mds.yandex.net/i?id=f50a7b0297e6d10659c6ec6ab55989848095f967-7989082-images-thumbs&n=13",
+      image: "https://i.pinimg.com/736x/24/56/ac/2456ac1e7dd000e03b0e5e58f08b8ada.jpg",
       description: "Irish coffee with Baileys cream liqueur.",
       price: 6.5,
       size:  "Small",
